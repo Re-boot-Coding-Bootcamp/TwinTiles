@@ -4,9 +4,22 @@ import { generateCardData } from "../utils";
 const CardDataContext = createContext();
 
 const CardDataContextProvider = ({ children }) => {
+  const [gameStarted, setGameStarted] = useState(false);
+
   const numberOfCards = 36;
   const [cardData, setCardData] = useState(generateCardData(numberOfCards));
   const [flippedCard, setFlippedCard] = useState(null);
+
+  const handleStartGame = () => {
+    setGameStarted(true);
+  };
+
+  const handleNewGame = () => {
+    setGameStarted(false);
+    const newCardData = generateCardData(numberOfCards);
+    setCardData(newCardData);
+    setFlippedCard(null);
+  };
 
   const handleCardClick = (card) => {
     // if we clicked on the same card, don't take any action
@@ -80,8 +93,11 @@ const CardDataContextProvider = ({ children }) => {
   return (
     <CardDataContext.Provider
       value={{
+        gameStarted,
         numberOfCards,
         cardData,
+        handleStartGame,
+        handleNewGame,
         handleCardClick,
       }}
     >

@@ -8,54 +8,73 @@ const CardDataContextProvider = ({ children }) => {
   const [cardData, setCardData] = useState(generateCardData(numberOfCards));
   const [flippedCard, setFlippedCard] = useState(null);
 
-  console.log(cardData);
-  console.log(flippedCard);
-
   const handleCardClick = (card) => {
-    if (flippedCard) {
-      if (flippedCard.imageUrl === card.imageUrl) {
-        // match
-        const updatedCardData = cardData.map((cardItem) => {
-          if (cardItem.id === card.id || cardItem.id === flippedCard.id) {
-            return {
-              ...cardItem,
-              isMatched: true,
-            };
-          }
-          // return the cardItem as is
-          return cardItem;
-        });
+    // if we clicked on the same card, don't take any action
+    if (flippedCard && card.id === flippedCard.id) {
+      return;
+    }
 
-        setCardData(updatedCardData);
-      } else {
-        // no match
-        // reset the data back to original
-        const updatedCardData = cardData.map((cardItem) => {
-          return {
-            ...cardItem,
-            isFlipped: false,
-          };
-        });
+    // if there's already 2 cards that's flipped, we don't take any actions
+    const numberOfFlippedCards = cardData.filter(
+      (cardItem) => cardItem.isFlipped
+    ).length;
+    if (numberOfFlippedCards >= 2) {
+      return;
+    }
 
-        setCardData(updatedCardData);
+    // update the card data to flip the card
+    const updatedCardData = cardData.map((cardItem) => {
+      if (cardItem.id === card.id) {
+        return {
+          ...cardItem,
+          isFlipped: true,
+        };
       }
-      // rest
-      setFlippedCard(null);
-    } else {
+      // return the cardItem as is
+      return cardItem;
+    });
+    setCardData(updatedCardData);
+
+    // if there's no flippedCard yet, we're gonna update that, and that's it
+    if (!flippedCard) {
+      setFlippedCard(card);
+      return;
+    }
+
+    // handle the situation where there's already a flippedCard
+    if (flippedCard.imageUrl === card.imageUrl) {
+      // match
       const updatedCardData = cardData.map((cardItem) => {
-        if (cardItem.id === card.id) {
+        if (cardItem.id === card.id || cardItem.id === flippedCard.id) {
           return {
             ...cardItem,
-            isFlipped: !cardItem.isFlipped,
+            isMatched: true,
+            isFlipped: false,
           };
         }
         // return the cardItem as is
         return cardItem;
       });
 
-      setCardData(updatedCardData);
-      setFlippedCard(card);
+      setTimeout(() => {
+        setCardData(updatedCardData);
+      }, 1000);
+    } else {
+      // no match
+      // reset the data back to original
+      const updatedCardData = cardData.map((cardItem) => {
+        return {
+          ...cardItem,
+          isFlipped: false,
+        };
+      });
+
+      setTimeout(() => {
+        setCardData(updatedCardData);
+      }, 1000);
     }
+    // rest
+    setFlippedCard(null);
   };
 
   return (

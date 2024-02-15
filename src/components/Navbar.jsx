@@ -4,9 +4,11 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { orange } from "@mui/material/colors";
 import { CardDataContext } from "../context/CardDataContext";
 import { Timer } from "./Timer";
+import MoveCounter from "./MoveCounter";
 
 const Navbar = () => {
-  const { handleNewGame } = useContext(CardDataContext);
+  const { handleNewGame, gameStarted, gameCompleted } =
+    useContext(CardDataContext);
 
   return (
     <AppBar position="static" sx={{ bgcolor: orange[300] }}>
@@ -25,8 +27,13 @@ const Navbar = () => {
             New Game
           </Button>
         </Box>
-        <Box id="navbar-right-side">
-          <Timer />
+        <Box id="navbar-right-side" display="flex" gap={2} alignItems="center">
+          {gameStarted && !gameCompleted && (
+            <>
+              <Timer />
+              <MoveCounter />
+            </>
+          )}
         </Box>
       </Toolbar>
     </AppBar>

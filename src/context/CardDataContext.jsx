@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { generateCardData } from "../utils";
 import { Levels, Speeds } from "../constants";
 
@@ -6,6 +6,7 @@ const CardDataContext = createContext();
 
 const CardDataContextProvider = ({ children }) => {
   const [gameStarted, setGameStarted] = useState(false);
+  const [gameCompleted, setGameCompleted] = useState(false);
 
   const [level, setLevel] = useState(Levels["4x4"]);
   const [speed, setSpeed] = useState(Speeds.slow);
@@ -14,14 +15,44 @@ const CardDataContextProvider = ({ children }) => {
   const [flippedCard, setFlippedCard] = useState(null);
 
   const [startedTimeStamp, setStartedTimeStamp] = useState(null);
+  const [diffSeconds, setDiffSeconds] = useState(0);
+  const [diffMinutes, setDiffMinutes] = useState(0);
+  const [diffHours, setDiffHours] = useState(0);
+
+  const [counter, setCounter] = useState({
+    steps: 0,
+    moves: 0,
+  });
+
+  useEffect(() => {
+    const numberOfUnmatchedCards = cardData.filter(
+      (cardItem) => !cardItem.isMatched
+    ).length;
+    if (numberOfUnmatchedCards === 0) {
+      setGameCompleted(true);
+      setGameStarted(false);
+    }
+  }, [cardData]);
 
   const handleStartGame = () => {
     setStartedTimeStamp(new Date());
     setGameStarted(true);
+    setGameCompleted(false);
+    const newCardData = generateCardData(level);
+    setCardData(newCardData);
+    setFlippedCard(null);
+    setDiffSeconds(0);
+    setDiffMinutes(0);
+    setDiffHours(0);
+    setCounter({
+      steps: 0,
+      moves: 0,
+    });
   };
 
   const handleNewGame = () => {
     setGameStarted(false);
+    setGameCompleted(false);
     const newCardData = generateCardData(level);
     setCardData(newCardData);
     setFlippedCard(null);
@@ -40,6 +71,13 @@ const CardDataContextProvider = ({ children }) => {
     if (numberOfFlippedCards >= 2) {
       return;
     }
+
+    setCounter((prev) => {
+      return {
+        steps: prev.steps + 1,
+        moves: (prev.steps + 1) % 2 === 0 ? prev.moves + 1 : prev.moves,
+      };
+    });
 
     // update the card data to flip the card
     const updatedCardData = cardData.map((cardItem) => {
@@ -106,11 +144,21 @@ const CardDataContextProvider = ({ children }) => {
     <CardDataContext.Provider
       value={{
         gameStarted,
+        gameCompleted,
         numberOfCards: level,
         cardData,
         level,
         speed,
+        moves: counter.moves,
+
         startedTimeStamp,
+        diffSeconds,
+        setDiffSeconds,
+        diffMinutes,
+        setDiffMinutes,
+        diffHours,
+        setDiffHours,
+
         handleLevelChange,
         setSpeed,
         handleStartGame,

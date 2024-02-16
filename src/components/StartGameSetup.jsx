@@ -101,17 +101,7 @@ const StartGameSetup = () => {
           />
         </RadioGroup>
       </Box>
-      <Button
-        variant="contained"
-        sx={{
-          bgcolor: orange[300],
-          color: "white",
-          "&:hover": {
-            bgcolor: orange[200],
-          },
-        }}
-        onClick={handleStartGame}
-      >
+      <Button variant="contained" onClick={handleStartGame}>
         Start The Game
       </Button>
     </Box>

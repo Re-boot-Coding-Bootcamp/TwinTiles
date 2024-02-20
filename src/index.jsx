@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { CardDataContextProvider } from "./context/CardDataContext";
+import { SoundContextProvider } from "./context/SoundContext";
 import { ThemeProvider } from "@mui/material";
 import theme from "./theme";
 
@@ -14,10 +15,12 @@ import "@fontsource/roboto/700.css";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <CardDataContextProvider>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </CardDataContextProvider>
+    <SoundContextProvider>
+      <CardDataContextProvider>
+        <ThemeProvider theme={theme}>
+          <App />
+        </ThemeProvider>
+      </CardDataContextProvider>
+    </SoundContextProvider>
   </React.StrictMode>
 );

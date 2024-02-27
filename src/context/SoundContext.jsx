@@ -12,10 +12,10 @@ const SoundContextProvider = ({ children }) => {
     new Audio(`${process.env.PUBLIC_URL}/assets/music/success.mp3`)
   );
   const [failed] = useState(
-    new Audio(`${process.env.PUBLIC_URL}//assets/music/failed.mp3`)
+    new Audio(`${process.env.PUBLIC_URL}/assets/music/failed.mp3`)
   );
   const [hint] = useState(
-    new Audio(`${process.env.PUBLIC_URL}//assets/music/hint.mp3`)
+    new Audio(`${process.env.PUBLIC_URL}/assets/music/hint.mp3`)
   );
 
   const [volume, setVolume] = useState(0.5);

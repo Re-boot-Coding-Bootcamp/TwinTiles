@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useMemo } from "react";
+import theme from "../theme";
 
 const LeaderBoard = ({ level, data }) => {
   const sortedRows = useMemo(() => {
@@ -25,8 +26,18 @@ const LeaderBoard = ({ level, data }) => {
       <Typography color="white" variant="subtitle1" textAlign="center" mb={1}>
         {level} leader board
       </Typography>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 280 }}>
+      <TableContainer component={Paper} sx={{ width: 1 }}>
+        <Table
+          sx={{
+            width: 280,
+            [theme.breakpoints.down("md")]: {
+              width: 200,
+            },
+            [theme.breakpoints.down("sm")]: {
+              width: 300,
+            },
+          }}
+        >
           <TableHead sx={{ bgcolor: "primary.main" }}>
             <TableRow>
               <TableCell>Ranking</TableCell>

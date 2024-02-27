@@ -1,25 +1,31 @@
-import { Box } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import { orange } from "@mui/material/colors";
 import React, { useContext } from "react";
 import { CardDataContext } from "../context/CardDataContext";
+import theme from "../theme";
 
-const Card = ({ data }) => {
+const Card = ({ data, size }) => {
   const { id, imageUrl, isFlipped, isMatched, hint } = data;
   const { handleCardClick } = useContext(CardDataContext);
+  const tabletOrSmaller = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <>
       {isMatched ? (
-        <Box height={100} width={100}></Box>
+        <Box height={size} width={size}></Box>
       ) : (
         <Box
-          height={100}
-          width={100}
+          height={size}
+          width={size}
           sx={{
             bgcolor: isFlipped ? "none" : "white",
-            "&:hover": {
-              bgcolor: isFlipped ? "none" : orange[200],
-            },
+            ...(tabletOrSmaller
+              ? {}
+              : {
+                  "&:hover": {
+                    bgcolor: isFlipped ? "none" : orange[200],
+                  },
+                }),
             ...(hint ? hintAnimation : {}),
           }}
           onClick={() => handleCardClick(data)}

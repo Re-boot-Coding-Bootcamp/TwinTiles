@@ -1,24 +1,17 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { createContext } from "react";
+import { ASSETS_URL } from "../constants/env";
 
 const SoundContext = createContext();
 
 const SoundContextProvider = ({ children }) => {
-  console.log(`${process.env.PUBLIC_URL}/assets/music/background_music.mp3`);
-
   const [backgroundMusic] = useState(
-    new Audio(`${process.env.PUBLIC_URL}/assets/music/background_music.mp3`)
+    new Audio(`${ASSETS_URL}/music/background_music.mp3`)
   );
-  const [success] = useState(
-    new Audio(`${process.env.PUBLIC_URL}/assets/music/success.mp3`)
-  );
-  const [failed] = useState(
-    new Audio(`${process.env.PUBLIC_URL}/assets/music/failed.mp3`)
-  );
-  const [hint] = useState(
-    new Audio(`${process.env.PUBLIC_URL}/assets/music/hint.mp3`)
-  );
+  const [success] = useState(new Audio(`${ASSETS_URL}/music/success.mp3`));
+  const [failed] = useState(new Audio(`${ASSETS_URL}/music/failed.mp3`));
+  const [hint] = useState(new Audio(`${ASSETS_URL}/music/hint.mp3`));
 
   const [volume, setVolume] = useState(0.5);
   const [mute, setMute] = useState(false);

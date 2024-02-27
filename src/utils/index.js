@@ -1,3 +1,5 @@
+import { ASSETS_URL } from "../constants/env";
+
 const generateRandomNumber = (max) => {
   return Math.floor(Math.random() * max + 1);
 };
@@ -28,7 +30,7 @@ const generateCardData = (numberOfCards) => {
   const cardData = imageIds.map((imageId, index) => {
     return {
       id: index + 1,
-      imageUrl: `${process.env.PUBLIC_URL}/assets/images/${imageId}.webp`,
+      imageUrl: `${ASSETS_URL}/images/${imageId}.webp`,
       isFlipped: false,
       isMatched: false,
     };

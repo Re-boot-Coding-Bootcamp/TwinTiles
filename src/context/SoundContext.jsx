@@ -5,6 +5,8 @@ import { createContext } from "react";
 const SoundContext = createContext();
 
 const SoundContextProvider = ({ children }) => {
+  console.log(`${process.env.PUBLIC_URL}/assets/music/background_music.mp3`);
+
   const [backgroundMusic] = useState(
     new Audio(`${process.env.PUBLIC_URL}/assets/music/background_music.mp3`)
   );

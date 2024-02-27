@@ -10,8 +10,6 @@ const SoundControl = () => {
   const { volumeUp, volumeDown, toggleMute, volume, mute, updateVolume } =
     useContext(SoundContext);
 
-  console.log("volume", volume);
-
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {

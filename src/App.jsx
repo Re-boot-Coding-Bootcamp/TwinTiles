@@ -8,7 +8,7 @@ import { WelcomeModal } from "./components/WelcomeModal";
 import { Route, Routes } from "react-router-dom";
 import LeaderboardPage from "./pages/Leaderboard";
 import SoundControl from "./components/SoundControl";
-import NotFoundPage from "./pages/404";
+// import NotFoundPage from "./pages/404";
 
 function App() {
   const { gameStarted, gameCompleted } = useContext(CardDataContext);
@@ -31,7 +31,7 @@ function App() {
 
           <Route path="leaderboard" element={<LeaderboardPage />} />
 
-          <Route path="*" element={<NotFoundPage />} />
+          {/* <Route path="*" element={<NotFoundPage />} /> */}
         </Route>
       </Routes>
 

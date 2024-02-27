@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 import React, { useContext } from "react";
 import { CardDataContext } from "../context/CardDataContext";
 import { LeaderBoard } from "./LeaderBoard";
@@ -8,6 +9,7 @@ import { Levels } from "../constants";
 const GameCompletion = () => {
   const {
     handleStartGame,
+    handleNewGame,
     timeTakenDisplayValue,
     moves,
     level,
@@ -15,6 +17,7 @@ const GameCompletion = () => {
     sixLeaderBoard,
     eightLeaderBoard,
   } = useContext(CardDataContext);
+
   const leaderBoardData = {
     [Levels["4x4"].label]: fourLeaderBoard,
     [Levels["6x6"].label]: sixLeaderBoard,
@@ -30,13 +33,22 @@ const GameCompletion = () => {
           <Typography color="white">Time: {timeTakenDisplayValue}</Typography>
           <Typography color="white">Moves: {moves}</Typography>
         </Box>
-        <Button
-          variant="contained"
-          endIcon={<RestartAltIcon />}
-          onClick={handleStartGame}
-        >
-          Play Again
-        </Button>
+        <Box display={"flex"} gap={2}>
+          <Button
+            variant="contained"
+            endIcon={<SportsEsportsIcon />}
+            onClick={handleNewGame}
+          >
+            New Game
+          </Button>
+          <Button
+            variant="contained"
+            endIcon={<RestartAltIcon />}
+            onClick={handleStartGame}
+          >
+            Play Again
+          </Button>
+        </Box>
       </Box>
       <LeaderBoard level={level.label} data={leaderBoardData[level.label]} />
     </Box>

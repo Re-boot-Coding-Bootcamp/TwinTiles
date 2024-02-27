@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { generateCardData, generateRandomNumber } from "../utils";
-import { Levels, Speeds } from "../constants";
+import { Levels, LocalStorageKeys, Speeds } from "../constants";
 import { SoundContext } from "./SoundContext";
 
 const CardDataContext = createContext();
@@ -9,7 +9,10 @@ const CardDataContextProvider = ({ children }) => {
   const { playSuccessSound, playFailedSound, playBackgroundMusic } =
     useContext(SoundContext);
 
-  const [userName, setUserName] = useState(null);
+  const [userName, setUserName] = useState(() => {
+    const storedUserName = localStorage.getItem(LocalStorageKeys.UserName);
+    return storedUserName ?? null;
+  });
 
   const [gameStarted, setGameStarted] = useState(false);
   const [gameCompleted, setGameCompleted] = useState(false);
@@ -44,21 +47,21 @@ const CardDataContextProvider = ({ children }) => {
       case "4x4":
         setFourLeaderBoard(data);
         window.localStorage.setItem(
-          "reboot-memory-game-leaderboard-4x4",
+          LocalStorageKeys.FourLeaderBoard,
           JSON.stringify(data)
         );
         break;
       case "6x6":
         setSixLeaderBoard(data);
         window.localStorage.setItem(
-          "reboot-memory-game-leaderboard-6x6",
+          LocalStorageKeys.SixLeaderBoard,
           JSON.stringify(data)
         );
         break;
       case "8x8":
         setEightLeaderBoard(data);
         window.localStorage.setItem(
-          "reboot-memory-game-leaderboard-8x8",
+          LocalStorageKeys.EightLeaderBoard,
           JSON.stringify(data)
         );
         break;
@@ -69,13 +72,13 @@ const CardDataContextProvider = ({ children }) => {
 
   const getLeaderBoardData = () => {
     const fourLeaderBoardData = JSON.parse(
-      window.localStorage.getItem("reboot-memory-game-leaderboard-4x4")
+      window.localStorage.getItem(LocalStorageKeys.FourLeaderBoard)
     );
     const sixLeaderBoardData = JSON.parse(
-      window.localStorage.getItem("reboot-memory-game-leaderboard-6x6")
+      window.localStorage.getItem(LocalStorageKeys.SixLeaderBoard)
     );
     const eightLeaderBoardData = JSON.parse(
-      window.localStorage.getItem("reboot-memory-game-leaderboard-8x8")
+      window.localStorage.getItem(LocalStorageKeys.EightLeaderBoard)
     );
 
     setFourLeaderBoard(fourLeaderBoardData);
@@ -289,6 +292,11 @@ const CardDataContextProvider = ({ children }) => {
     }, 300);
   };
 
+  const updateUserName = (name) => {
+    setUserName(name);
+    localStorage.setItem(LocalStorageKeys.UserName, name);
+  };
+
   return (
     <CardDataContext.Provider
       value={{
@@ -316,7 +324,7 @@ const CardDataContextProvider = ({ children }) => {
         penaltyTime,
         timeTakenDisplayValue,
 
-        updateUserName: setUserName,
+        updateUserName,
         handleHintClick,
         handleLevelChange,
         setSpeed,

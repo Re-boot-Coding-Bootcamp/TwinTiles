@@ -3,6 +3,7 @@ import { Card } from "./Card";
 import { Hint } from "./Hint";
 import { useContext } from "react";
 import { CardDataContext } from "../context/CardDataContext";
+import { AreYouSureModal } from "./AreYouSureModal";
 
 const CardGrid = () => {
   const { numberOfCards, cardData } = useContext(CardDataContext);
@@ -12,6 +13,7 @@ const CardGrid = () => {
 
   return (
     <Box display="flex" flexDirection="column" gap={2}>
+      <AreYouSureModal />
       <Hint />
 
       <Box

@@ -13,12 +13,16 @@ import React, { useMemo } from "react";
 
 const LeaderBoard = ({ level, data }) => {
   const sortedRows = useMemo(() => {
-    return data.sort((a, b) => a.time - b.time).slice(0, 10);
+    if (data && data.length > 0) {
+      return data.sort((a, b) => a.time - b.time).slice(0, 10);
+    } else {
+      return [];
+    }
   }, [data]);
 
   return (
     <Box id="leader-board">
-      <Typography color="white" variant="h6" textAlign="center" mb={1}>
+      <Typography color="white" variant="subtitle1" textAlign="center" mb={1}>
         {level} leader board
       </Typography>
       <TableContainer component={Paper}>
@@ -31,23 +35,31 @@ const LeaderBoard = ({ level, data }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedRows.map((row, index) => (
-              <TableRow
-                key={row.name}
-                sx={{
-                  "&:last-child td, &:last-child th": { border: 0 },
-                  "&:hover": {
-                    bgcolor: "rgba(0, 0, 0, 0.04)",
-                  },
-                }}
-              >
-                <TableCell component="th" scope="row">
-                  {index + 1}
+            {sortedRows.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={3} align="center">
+                  No records found
                 </TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell align="right">{row.time}</TableCell>
               </TableRow>
-            ))}
+            ) : (
+              sortedRows.map((row, index) => (
+                <TableRow
+                  key={`${row.name}-${index}`}
+                  sx={{
+                    "&:last-child td, &:last-child th": { border: 0 },
+                    "&:hover": {
+                      bgcolor: "rgba(0, 0, 0, 0.04)",
+                    },
+                  }}
+                >
+                  <TableCell component="th" scope="row">
+                    {index + 1}
+                  </TableCell>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell align="right">{row.time}</TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>

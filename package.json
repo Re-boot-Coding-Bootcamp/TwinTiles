@@ -1,7 +1,11 @@
 {
-  "name": "memory-game",
+  "name": "twintiles",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "Muradil Erkin",
+    "email": "muradil.erkin@re-boot.us"
+  },
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
@@ -11,6 +15,7 @@
     "date-fns": "^3.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.1",
     "react-scripts": "5.0.1"
   },
   "scripts": {

@@ -22,4 +22,11 @@ const Speeds = {
   slow: 1000,
 };
 
-export { Levels, Speeds };
+const LocalStorageKeys = {
+  UserName: "twintiles-username",
+  FourLeaderBoard: "twintiles-leaderboard-4x4",
+  SixLeaderBoard: "twintiles-leaderboard-6x6",
+  EightLeaderBoard: "twintiles-leaderboard-8x8",
+};
+
+export { Levels, Speeds, LocalStorageKeys };

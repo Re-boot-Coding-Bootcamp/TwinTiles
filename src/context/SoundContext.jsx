@@ -6,11 +6,17 @@ const SoundContext = createContext();
 
 const SoundContextProvider = ({ children }) => {
   const [backgroundMusic] = useState(
-    new Audio("/assets/music/background_music.mp3")
+    new Audio(`${process.env.PUBLIC_URL}/assets/music/background_music.mp3`)
   );
-  const [success] = useState(new Audio("/assets/music/success.mp3"));
-  const [failed] = useState(new Audio("/assets/music/failed.mp3"));
-  const [hint] = useState(new Audio("/assets/music/hint.mp3"));
+  const [success] = useState(
+    new Audio(`${process.env.PUBLIC_URL}/assets/music/success.mp3`)
+  );
+  const [failed] = useState(
+    new Audio(`${process.env.PUBLIC_URL}//assets/music/failed.mp3`)
+  );
+  const [hint] = useState(
+    new Audio(`${process.env.PUBLIC_URL}//assets/music/hint.mp3`)
+  );
 
   const [volume, setVolume] = useState(0.5);
   const [mute, setMute] = useState(false);

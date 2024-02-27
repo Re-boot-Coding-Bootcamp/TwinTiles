@@ -28,7 +28,7 @@ const generateCardData = (numberOfCards) => {
   const cardData = imageIds.map((imageId, index) => {
     return {
       id: index + 1,
-      imageUrl: `/assets/images/${imageId}.webp`,
+      imageUrl: `${process.env.PUBLIC_URL}/assets/images/${imageId}.webp`,
       isFlipped: false,
       isMatched: false,
     };
